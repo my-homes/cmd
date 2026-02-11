@@ -1,0 +1,12 @@
+#! /usr/bin/env groovy
+@GrabResolver(name='jitpack', root='https://jitpack.io', m2Compatible=true)
+@Grab('org.bitbucket.javacommons:jc-core:2024.1014.2346.27')
+
+import jc.core.*
+
+//String script = MiscUtil.readStringFromFile(args[0], "")
+String script = Sys.readAsText(args[0])
+var vm = new GroovyVM();
+String[] modifiedArgs = Arrays.copyOfRange(args, 1, args.length);
+vm.setVariable("args", modifiedArgs)
+vm.eval(script)

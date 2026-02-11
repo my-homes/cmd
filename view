@@ -1,0 +1,3 @@
+#! /usr/bin/env bash
+set -e
+start //max sakura.exe -R -X=1 -Y=1 $*

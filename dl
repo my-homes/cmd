@@ -1,0 +1,112 @@
+#!/usr/bin/env -S dotnet run --property WarningLevel=0
+#:sdk      Microsoft.NET.Sdk
+#:property TargetFramework = net10.0
+#:property LangVersion = preview
+#:property PublishAot = false
+#:property ImplicitUsings = false
+#:property Nullable = enable
+#:property PlatformTarget = AnyCPU
+#:property Prefer32Bit = false
+#:property AllowUnsafeBlocks = true
+#:package  Global.Sys@*
+#:package  CommandLineParser@*
+#:package  OctaneEngineCore@*
+
+/***** $(HOME)\util\dl\dl.main.cs *****/
+//#! /usr/bin/env cscs
+//css_nuget Global.Sys
+//css_nuget CommandLineParser
+//css_nuget OctaneEngineCore
+
+using OctaneEngineCore;
+using OctaneEngineCore.Clients;
+
+using CommandLine;
+using Global;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading;
+using System.Xml.Linq;
+using static Global.EasyObject;
+
+Log(new { args });
+
+try
+{
+    ParserResult<Options> parseResult = Parser.Default.ParseArguments<Options>(args);
+    switch (parseResult.Tag)
+    {
+        // パース成功
+        case ParserResultType.Parsed:
+            {
+                var parsed = parseResult as Parsed<Options>;
+                Options? opt = parsed!.Value;
+                string url = opt.Url!;
+                var engine = EngineBuilder.Create().WithConfiguration(config =>
+                {
+                    config.Parts = 8;
+                    config.BufferSize = 8192;
+                    config.ShowProgress = true;
+                    config.NumRetries = 10;
+                    config.BytesPerSecond = 1;
+                    config.UseProxy = false;
+                    config.LowMemoryMode = false;
+                    config.RetryCap = 30;
+                }).Build();
+                // Create engine directly without builder - no DI required (if you don't want it!)
+                //var engine = EngineBuilder.Create().WithConfiguration(config => {
+                //    config.Parts = 8;
+                //    config.BufferSize = 8192;
+                //    config.ShowProgress = true;
+                //    config.NumRetries = 10;
+                //    config.BytesPerSecond = 1;
+                //    config.UseProxy = false;
+                //    config.LowMemoryMode = false;
+                //    config.RetryCap = 30;
+                //}).Build();
+                //var engine = EngineBuilder.Create().Build();
+
+                // Setup download
+                var pauseTokenSource = new PauseTokenSource();
+                using var cancelTokenSource = new CancellationTokenSource();
+
+                // Download the file
+                engine.DownloadFile(new OctaneRequest(url, outFile: opt.OutputFileName), pauseTokenSource, cancelTokenSource.Token).Wait();
+            }
+            break;
+        // パース失敗
+        case ParserResultType.NotParsed:
+            {
+                // パースの成否でパース結果のオブジェクトの方が変わる
+                //var notParsed = parseResult as NotParsed<Options>;
+                //Console.Error.WriteLine(CommandLine.Text.HelpText.AutoBuild(parseResult));
+            }
+            break;
+    }
+}
+catch (Exception e)
+{
+    //Log(e.ToString());
+    //Message(e.ToString(), "Exception");
+    Console.Error.WriteLine(e.ToString());
+}
+
+class Options
+{
+    [Option('o', "output", HelpText = "<output file name>", Required = false)]
+    public string? OutputFileName
+    {
+        get;
+        set;
+    }
+    [Value(1, MetaName = "Url", HelpText = "<url>", Required = true)]
+    public string? Url
+    {
+        get;
+        set;
+    }
+};

@@ -1,0 +1,4 @@
+#! /usr/bin/env bash
+set -e
+echo Removing release: "$1" 1>&2
+gh release delete -y "$1"

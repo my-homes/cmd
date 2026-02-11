@@ -1,0 +1,67 @@
+#! /usr/bin/env bash
+set -uvx
+set -e
+ARGS=()
+FORCE=0
+STATIC=0
+while (( $# > 0 ))
+do
+  case $1 in
+    # ...
+    -f | --force)
+      FORCE=1
+      ;;
+    # ...
+    -s | --static)
+      STATIC=1
+      ;;
+    # ...
+    -*)
+      echo "Illegal option $1." 1>&2
+      exit 1
+      ;;
+    # ...
+    *)
+      ARGS=("${ARGS[@]}" "$1")
+      ;;
+  esac
+  shift
+done
+
+if [[ "${#ARGS[@]}" -lt 1 ]]; then
+  echo "Too few arguments." 1>&2
+  exit 1
+elif [[ "${#ARGS[@]}" -gt 2 ]]; then
+  echo "Too many arguments." 1>&2
+  exit 1
+fi
+
+get_nth () {
+  local n=$1
+  shift
+  eval echo \$${n}
+}
+
+echo FORCE=$FORCE
+
+ARG1=$(get_nth 1 "${ARGS[@]}")
+
+echo ARG1=$ARG1
+
+DIR_PATH=$(cd $(dirname "$ARG1") && pwd)
+echo $DIR_PATH
+FILE_PATH=$(cd $(dirname "$ARG1") && pwd)/$(basename "$ARG1")
+echo $FILE_PATH
+BASE_NAME=$(basename "$ARG1")
+BASE_BASE_NAME=$(basename "$BASE_NAME" ".pro")
+echo $BASE_BASE_NAME
+
+QMAKE=/mingw64/bin/qmake6.exe
+FOLDER=build/$BASE_BASE_NAME.64.dynamic
+if [ "$STATIC" == "1" ]; then QMAKE=/mingw64/qt6-static/bin/qmake6.exe ; FOLDER=build/$BASE_BASE_NAME.64.static ; fi
+if [ "$FORCE" == "1" ]; then rm -rvf $FOLDER ; fi
+mkdir -p $FOLDER
+cd $FOLDER
+$QMAKE -r ../../$BASE_NAME
+rm -rf debug
+make -f Makefile.Release

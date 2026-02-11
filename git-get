@@ -1,0 +1,5 @@
+#! /usr/bin/env bash
+git.exe remote -v
+git.exe pull -f origin main
+git.exe fetch --tags
+git.exe submodule update --init --recursive

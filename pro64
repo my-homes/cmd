@@ -1,0 +1,3 @@
+#! /usr/bin/env bash
+#mingw64x.cmd ~/cmd/pro64.mg "$@"
+~/cmd/pro64.mg "$@"

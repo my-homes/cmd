@@ -1,0 +1,6 @@
+#! /usr/bin/env bash
+export JAVA_HOME="C:\Program Files\Zulu\zulu-11"
+java_home_unix=`cygpath -u "$JAVA_HOME"`
+export PATH="$java_home_unix/bin:$PATH"
+./gradlew "$@"
+

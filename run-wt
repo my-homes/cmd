@@ -1,0 +1,2 @@
+#! /usr/bin/env bash
+wt --maximized -d "D:\home13" "C:\ProgramData\msys2\msys2_shell.cmd" -mingw64 -defterm -here -full-path -no-start

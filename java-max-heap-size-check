@@ -1,0 +1,4 @@
+#! /usr/bin/env bash
+set -uvx
+set -e
+java -XX:+PrintFlagsFinal -version | grep -Ei "maxheapsize | maxram"

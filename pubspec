@@ -1,0 +1,5 @@
+#! /usr/bin/env bash
+set -e
+specgen $*
+dt fix
+dt dep

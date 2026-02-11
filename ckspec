@@ -1,0 +1,4 @@
+#! /usr/bin/env bash
+set -e
+specgen >& /dev/null && git --no-pager diff pubspec.yaml
+ 

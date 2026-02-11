@@ -1,0 +1,4 @@
+#! /usr/bin/env bash
+set -e
+#dart pub deps --style list | sed "/^ .*/d"
+dart pub deps --no-dev --style list | sed "/^ .*/d"

@@ -1,0 +1,54 @@
+#! /usr/bin/env bash
+#set -uvx
+set -e
+cd "$(dirname "$0")"
+cwd=`pwd`
+ts=`date "+%Y.%m%d.%H%M.%S"`
+
+if [ "${MSYSTEM_CARCH}" = "i686" ]; then
+  arch=x32
+else
+  arch=x64
+fi
+
+ROOT=$1
+name=$2
+
+mkdir -p "$ROOT"
+
+#line=`url-text https://github.com/my-homes/programs/raw/main/$name.url.txt`
+line=`url-text https://raw.githubusercontent.com/my-homes/programs/refs/heads/main/$name.url.txt`
+echo \$line=$line
+
+name=`echo "$line" | awk '{print $1}'`
+version=`echo "$line" | awk '{print $2}'`
+url=`echo "$line" | awk '{print $3}'`
+
+echo \$name=$name 1>&2
+echo \$version=$version 1>&2
+echo \$url=$url 1>&2
+
+if [ ! -e $ROOT/@$version ]; then
+  if [ ! -e $ROOT/@$version.zip ]; then
+    url-download-2 $ROOT/@$version.zip $url 1>&2
+  fi
+  mkdir -p "$ROOT/@$version"
+  cd $ROOT/@$version
+  7z x -r $ROOT/@$version.zip 1>&2
+  rm -rf $ROOT/@$version.zip
+fi
+
+PROG_ROOT="$ROOT/@$version"
+
+if [ -e $PROG_ROOT/.path-list.txt ]; then
+  cd $PROG_ROOT
+  cat .path-list.txt | xargs -i realpath {} | xargs -i cygpath -u {}
+elif [ -e $PROG_ROOT/$arch/.path-list.txt ]; then
+  cd $PROG_ROOT/$arch
+  cat .path-list.txt | xargs -i realpath {} | xargs -i cygpath -u {}
+else
+  echo ".path-list.txt not found!" 1>&2
+  while read -r line; do
+    echo $line | xargs -i realpath {} | xargs -i cygpath -u {}
+  done <<< "$(find $PROG_ROOT -name .path -print | xargs -i dirname {})"
+fi

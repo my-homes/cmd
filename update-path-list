@@ -1,0 +1,19 @@
+#! /usr/bin/env bash
+#set -uvx
+set -e
+cd "$(dirname "$0")"
+cwd=`pwd`
+ts=`date "+%Y.%m%d.%H%M.%S"`
+
+ROOT=$(cd $HOME/.. && pwd)
+
+rm -rf $ROOT/.path-list-x32
+rm -rf $ROOT/.path-list-x64
+
+while IFS= read -r pkg; do
+  echo "\$pkg: $pkg"
+  pkg-add "$ROOT" $pkg
+done <<< $(url-text https://github.com/my-homes/programs/raw/main/pkg-list.txt)
+
+cp -p $ROOT/.path-list-x32 $ROOT/.path-list-x32-$ts
+cp -p $ROOT/.path-list-x64 $ROOT/.path-list-x64-$ts

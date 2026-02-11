@@ -1,0 +1,3 @@
+#! /usr/bin/env bash
+deno.exe run --allow-all --unstable-ffi "$@"
+

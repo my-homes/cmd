@@ -1,0 +1,12 @@
+#! /usr/bin/env bash
+set -e
+git tag -l | xargs -n 1
+#git push --delete origin main
+git tag | xargs git tag -d
+git checkout --orphan latest_branch
+git add -A
+git commit -am "Initial commit"
+git branch -D main
+git branch -m main
+git push -f origin main
+git push --set-upstream origin main

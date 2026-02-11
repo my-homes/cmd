@@ -1,0 +1,11 @@
+#! /usr/bin/env bash
+set -uvx
+set -e
+sudo.cmd raco pkg install -i --auto --skip-installed access
+sudo.cmd raco pkg install -i --auto --skip-installed output
+sudo.cmd raco pkg install -i --auto --skip-installed while-until
+sudo.cmd raco pkg install -i --auto --skip-installed meta-json
+sudo.cmd raco pkg install -i --auto --skip-installed json-api
+sudo.cmd raco pkg install -i --auto --skip-installed js-eval
+sudo.cmd raco pkg install -i --auto --skip-installed fmt
+sudo.cmd raco pkg install -i --auto --skip-installed racket-langserver

@@ -1,0 +1,4 @@
+#! /usr/bin/env bash
+#curl -L -s "$1"
+ wget -q -O - "$1"
+ 

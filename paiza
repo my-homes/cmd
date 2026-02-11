@@ -1,0 +1,4 @@
+#! /usr/bin/env bash
+set -uvx
+set -e
+ssh -p 54742 ubuntu@javacommons.paiza-user-basic.cloud $*

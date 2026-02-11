@@ -1,0 +1,15 @@
+!*
+/.sbt
+/*.n
+/*.jar
+/*.tmp
+/tmp.*
+/waf3*
+/gcapi.dll
+/*.evb
+*.exe.WebView2
+*.log
+/deno.old.exe
+/*.a
+/*-dynamic.exe
+/PROGRAM.logic.*

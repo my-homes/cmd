@@ -1,0 +1,6 @@
+#! /usr/bin/env bash
+set -e
+export PATH="`cygpath -u $USERPROFILE/AppData/Local/Pub/Cache/bin`:$PATH"
+dart pub global deactivate script_runner
+dart pub global activate script_runner
+scr.bat $*

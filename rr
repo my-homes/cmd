@@ -1,0 +1,2 @@
+#! /usr/bin/env bash
+"$USERPROFILE\AppData\Local\Programs\RustRover\bin\rustrover64.exe" "$@" >& /dev/null &

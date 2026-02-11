@@ -1,0 +1,32 @@
+[user]
+	name = JavaCommons Technologies
+	email = javacommons@gmail.com
+[pull]
+	rebase = false
+[core]
+	quotepath = false
+	longpaths = true
+    eol = lf
+	excludesfile = ~/.gitignore_global
+	safecrlf = false
+	editor = nano
+	pager = less -x1,5,9,13,17
+[gui]
+	encoding = utf-8
+[gc]
+	autoDetach = false
+[credential "https://gitlab.com"]
+	provider = generic
+[filter "lfs"]
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+[safe]
+	directory = *
+[credential "helperselector"]
+	selected = manager
+[alias]
+	current-hash = show --format='h' --no-patch
+	current-hash-long = show --format='H' --no-patch
+

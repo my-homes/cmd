@@ -1,0 +1,7 @@
+#! /usr/bin/env bash
+#set -uvx
+#set -e
+git.exe remote -v
+git.exe fetch
+git.exe diff --summary origin/HEAD
+git.exe status --short

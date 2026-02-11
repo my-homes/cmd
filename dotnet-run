@@ -1,0 +1,10 @@
+#! /usr/bin/env bash
+#set -uvx
+set -e
+#cd "$(dirname "$0")"
+cwd=`pwd`
+ts=`date "+%Y.%m%d.%H%M.%S"`
+
+run_file=$(dotnet-gen "$1")
+run_file=$(cygpath -u "$run_file")
+$run_file

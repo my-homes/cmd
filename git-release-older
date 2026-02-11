@@ -1,0 +1,13 @@
+#! /usr/bin/env bash
+#set -uvx
+set -e
+#cd "$(dirname "$0")"
+#cwd=`pwd`
+#ts=`date "+%Y.%m%d.%H%M.%S"`
+
+if [ -z "$1" ]; then
+  git-release-list | sed '$d'
+else
+  name="$1"
+  git-release-list "$name" | sed '$d'
+fi

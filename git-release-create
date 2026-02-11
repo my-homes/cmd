@@ -1,0 +1,11 @@
+#! /usr/bin/env bash
+#set -uvx
+set -e
+#cd "$(dirname "$0")"
+#cwd=`pwd`
+ts=`date "+%Y.%m%d.%H%M.%S"`
+gh auth login --with-token < ~/settings/github-all-token.txt
+#gh auth login --hostname github.com --git-protocol https --web
+#gh auth refresh -h github.com -s workflow
+#gh release create v$ts "git-release-create" --repo spider-explorer/spider5 --generate-notes --target main
+gh release create "$@" --generate-notes --target main

@@ -1,0 +1,5 @@
+#! /usr/bin/env bash
+set -e
+cd ~/api/j2ee
+#gradle run1
+start gradle run1

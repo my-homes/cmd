@@ -1,0 +1,4 @@
+#! /usr/bin/env bash
+set -e
+#ls -l | sed "/^[^d].*/d"
+find . -mindepth 1 -maxdepth 1 -type d

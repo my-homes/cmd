@@ -1,0 +1,3 @@
+#! /usr/bin/env bash
+set -e
+deno compile --no-check --allow-all  --unstable-ffi "$@"

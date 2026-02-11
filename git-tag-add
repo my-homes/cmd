@@ -1,0 +1,10 @@
+#! /usr/bin/env bash
+tag=$1
+if [ $# -eq 0 ]
+  then
+    ts=`date "+%Y.%m%d.%H%M.%S"`
+    tag=${ts}
+fi
+git.exe tag -a "$tag" -m"$tag"
+git.exe push origin "$tag"
+git-tag-list

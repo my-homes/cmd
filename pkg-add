@@ -1,0 +1,56 @@
+#! /usr/bin/env bash
+#set -uvx
+set -e
+cd "$(dirname "$0")"
+cwd=`pwd`
+ts=`date "+%Y.%m%d.%H%M.%S"`
+
+ROOT=$1
+name=$2
+
+mkdir -p "$ROOT"
+
+line=`url-text https://raw.githubusercontent.com/my-homes/programs/refs/heads/main/$name.url.txt`
+echo \$line=$line 1>&2
+
+name=`echo "$line" | awk '{print $1}'`
+version=`echo "$line" | awk '{print $2}'`
+url=`echo "$line" | awk '{print $3}'`
+
+echo \$name=$name 1>&2
+echo \$version=$version 1>&2
+echo \$url=$url 1>&2
+
+if [ ! -e $ROOT/@$version ]; then
+  if [ ! -e $ROOT/@$version.zip ]; then
+    url-download-2 $ROOT/@$version.zip $url 1>&2
+  fi
+  mkdir -p "$ROOT/@$version"
+  cd $ROOT/@$version
+  7z x -r $ROOT/@$version.zip 1>&2
+  rm -rf $ROOT/@$version.zip
+fi
+
+PROG_ROOT="$ROOT/@$version"
+
+if [ -e $PROG_ROOT/.path-list.txt ]; then
+  cd $PROG_ROOT
+  cat .path-list.txt | xargs -i realpath {} | xargs -i cygpath -wm {} >> $ROOT/.path-list-x32
+  cat .path-list.txt | xargs -i realpath {} | xargs -i cygpath -wm {} >> $ROOT/.path-list-x64
+fi
+if [ -e $PROG_ROOT/x32/.path-list.txt ]; then
+  cd $PROG_ROOT/x32
+  cat .path-list.txt | xargs -i realpath {} | xargs -i cygpath -wm {} >> $ROOT/.path-list-x32
+fi
+if [ -e $PROG_ROOT/x64/.path-list.txt ]; then
+  cd $PROG_ROOT/x64
+  cat .path-list.txt | xargs -i realpath {} | xargs -i cygpath -wm {} >> $ROOT/.path-list-x64
+fi
+
+if [ ! -e $PROG_ROOT/.path-list.txt ] && [ ! -e $PROG_ROOT/x32/.path-list.txt ] && [ ! -e $PROG_ROOT/x64/.path-list.txt ]; then
+  echo ".path-list.txt not found!" 1>&2
+  while read -r line; do
+    echo $line | xargs -i realpath {} | xargs -i cygpath -wm {} >> $ROOT/.path-list-x32
+    echo $line | xargs -i realpath {} | xargs -i cygpath -wm {} >> $ROOT/.path-list-x64
+  done <<< "$(find $PROG_ROOT -name .path -print | xargs -i dirname {})"
+fi

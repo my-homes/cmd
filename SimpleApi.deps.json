@@ -1,0 +1,35 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0/win-x64",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {},
+    ".NETCoreApp,Version=v6.0/win-x64": {
+      "SimpleApi/0.0.0.0": {
+        "dependencies": {
+          "DNNE": "2.0.7"
+        },
+        "runtime": {
+          "SimpleApi.dll": {}
+        }
+      },
+      "DNNE/2.0.7": {}
+    }
+  },
+  "libraries": {
+    "SimpleApi/0.0.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "DNNE/2.0.7": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ekc2MgCEQZwS/Nn5CFmR81XuuNRa+ZOYmlt05487vAq/LY1QQxf0XVv/n8r6GMcnb4/r19GMWaZY11e0tV6m5w==",
+      "path": "dnne/2.0.7",
+      "hashPath": "dnne.2.0.7.nupkg.sha512"
+    }
+  }
+}

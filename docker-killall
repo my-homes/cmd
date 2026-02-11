@@ -1,0 +1,9 @@
+#! /usr/bin/env bash
+#set -uvx
+set -e
+PS=$(docker ps -a -q)
+if [ -z "$PS" ]; then
+  echo No containers
+else
+  docker rm -f $PS
+fi

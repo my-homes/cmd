@@ -1,0 +1,5 @@
+#! /usr/bin/env bash
+set -e
+#curl -L -O "$1"
+#aria2c.exe --allow-overwrite=true  -x 16 -j 16 "$1"
+wget2 -nc -T 8 "$1"

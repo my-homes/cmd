@@ -1,0 +1,10 @@
+#! /usr/bin/bash
+#set -uvx
+set -e
+git.exe checkout --orphan newBranch
+git.exe add -A  # Add all files and commit them
+git.exe commit -m "Initial commit"
+git.exe branch -D main  # Deletes the master branch
+git.exe branch -m main  # Rename the current branch to master
+git.exe push -f origin main  # Force push master branch to github
+git.exe gc --aggressive --prune=all  # remove the old files

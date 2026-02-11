@@ -1,0 +1,10 @@
+#! /usr/bin/env bash
+set -uvx
+set -e
+BITBUCKET_USERNAME=javacommons
+BITBUCKET_APP_PASSWORD=$BIT_ALL
+BITBUCKET_REPO_OWNER=javacommons
+BITBUCKET_REPO_SLUG=$1
+FILE_TO_UPLOAD=$2
+dos2unix "${FILE_TO_UPLOAD}"
+curl -X POST "https://${BITBUCKET_USERNAME}:${BITBUCKET_APP_PASSWORD}@api.bitbucket.org/2.0/repositories/${BITBUCKET_REPO_OWNER}/${BITBUCKET_REPO_SLUG}/downloads" --form files=@"${FILE_TO_UPLOAD}"

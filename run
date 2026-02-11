@@ -1,0 +1,62 @@
+#! /usr/bin/env bash
+#set -uvx
+set -e
+echo pwd=`pwd`
+echo "$@"
+path="$1"
+#path=`echo $path | sed 's/^"\(.*\)"$/\1/'`
+#path=`echo $path | sed "s/^'\(.*\)'$/\1/"`
+path=$(realpath "$path")
+echo \$path=$path
+directory=$(dirname "$path")
+echo \$directory=$directory
+filename=$(basename "$path")
+extension=${path##*.}
+echo \$extension=$extension
+if [ "$filename" == "CMakeLists.txt" ]; then
+    cd "$directory"
+    echo $(realpath `pwd`)
+    rm -rf .build
+    mkdir .build
+    cd .build
+    cmake .. -DCMAKE_BUILD_TYPE=Release
+    cmake --build . --config Release
+    cd $directory
+    find .build -maxdepth 1 -name "*.exe" | xargs -i ls -lh {}
+    shift
+    #find .build -maxdepth 1 -name "*.exe"
+    exe=$(find .build -maxdepth 1 -name "*.exe")
+    echo "$exe" "$@"
+    "$exe" "$@"
+elif [[ "$path" =~ ^.*[.]main.cs$ ]]; then
+    shift
+    unigen "$path"
+    $(dirname "$path")/.r.$(basename "$path" .main.cs) "$@"
+elif [ "$extension" == "cscs" ]; then
+    cscs "$@"
+elif [ "$extension" == "csws" ]; then
+    csws "$@"
+elif [ "$extension" == "csx" ]; then
+    dotnet tool install -g dotnet-script
+    dotnet tool update -g dotnet-script
+    csx="$1"
+    shift
+    dotnet script $csx -- "$@"
+elif [ "$extension" == "cs" ]; then
+  dotnet run --property WarningLevel=0 "$@"
+elif [ "$extension" == "csproj" ]; then
+  dotnet run --property WarningLevel=0 "$@"
+elif [ "$extension" == "groovy" ] || [ "$extension" == "g" ]; then
+  groovy-run "$@"
+elif [ "$extension" == "janet" ] || [ "$extension" == "j" ]; then
+  janet "$@"
+elif [ "$extension" == "rkt" ] || [ "$extension" == "scm" ]; then
+  racket-run "$@"
+elif [ "$extension" == "m3u" ] || [ "$extension" == "m4a" ] || [ "$extension" == "mp3" ] || [ "$extension" == "mp4" ]; then
+  PotPlayerPortable.exe "$@" &
+elif [ "$extension" == "js" ] || [ "$extension" == "ts" ] || [ "$extension" == "mjs" ] || [ "$extension" == "mts" ]; then
+  deno-run "$@"
+else
+  "$@"
+fi
+read -p 'Hit enter to exit: '

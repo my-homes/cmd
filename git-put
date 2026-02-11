@@ -1,0 +1,5 @@
+#! /usr/bin/env bash
+git.exe remote -v
+git.exe commit -a -m.
+git.exe push origin HEAD:main
+git.exe status --short

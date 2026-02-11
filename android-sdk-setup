@@ -1,0 +1,4 @@
+#! /usr/bin/env bash
+set -uvx
+set -e
+flutter config --android-sdk "$USERPROFILE\AppData\Local\Android\Sdk"

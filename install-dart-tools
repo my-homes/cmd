@@ -1,0 +1,9 @@
+#! /usr/bin/env bash
+set -e
+# for dart
+dart pub global deactivate specgen || true
+dart pub global activate specgen
+dart pub global deactivate dt || true
+dart pub global activate dt
+dart pub global deactivate protoc_plugin || true
+dart pub global activate protoc_plugin

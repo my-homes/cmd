@@ -1,0 +1,2 @@
+#! /usr/bin/env bash
+find $USERPROFILE/AppData/Local/Pub/Cache -name "*.dart" -print

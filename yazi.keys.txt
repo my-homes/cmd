@@ -1,0 +1,30 @@
+Yazi uses Vim-like key bindings for navigation and file management, which are highly customizable via a keymap.toml configuration file. You can view all available key bindings within Yazi by pressing ~ or F1. 
+
+Core Navigation and Movement
+Key binding 	Action
+j/k	Move cursor down/up
+h/l	Go to parent directory/open child directory or file
+gg/G	Move cursor to the top/bottom of the list
+Ctrl+u/Ctrl+d	Move up/down half a page
+Enter	Open file or enter directory
+q	Exit Yazi
+
+File Operations
+Key binding 	Action
+y	Yank (copy) selected files
+x	Cut selected files
+p	Paste yanked/cut files
+P	Paste, overwriting if the destination exists
+d	Delete selected files
+r	Rename a file
+a	Create a new file or directory (end with / for a directory)
+v	Enter visual mode to select multiple files
+
+Search, Filter, and View
+Key binding 	Action
+/	Start a file name search
+S	Search file content using ripgrep
+Z	Use zoxide to quickly change directory
+Space	Select a file (also used for drag/drop operations)
+zh	Toggle the display of hidden files
+Tab	Switch focus between panes

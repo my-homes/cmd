@@ -1,0 +1,12 @@
+#! /usr/bin/env bash
+#set -uvx
+set -e
+#xstart bash -c "run "$@" & read -p '[Press ENTER to continue]'"
+#start cmd.exe //c bash -c "run "$*"" "&" pause
+case "$OSTYPE" in
+    linux*)  gnome-terminal -- bash -c "run "$@"" ;;
+    darwin*)  echo "macOS" ;;
+    cygwin*)  start cmd.exe //c bash -c "run "$*"" ;;
+    msys*)   echo "MSYS" ;;
+    *)        start cmd.exe //c bash -c "run "$*"" ;;
+esac

@@ -1,0 +1,10 @@
+#! /usr/bin/env bash
+#set -uvx
+set -e
+#if [ "${MSYSTEM_CARCH}" = "i686" ]; then
+#  arch=x32
+#else
+#  arch=x64
+#fi
+arch=x$BITNESS
+premake4 --platform=$arch --file="$1" gmake

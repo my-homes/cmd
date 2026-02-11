@@ -1,0 +1,9 @@
+#! /usr/bin/env bash
+#set -uvx
+cat "$1" | jq -r '.[]'
+lines="`cat $1 | jq -r '.[]'`"
+#cmdLine=`echo "$lines" | sed 's/^\|$/"/g' | tr "\r\n" " "`
+#cmdLine=`echo "$lines" | sed "s/^\|$/'/g" | tr "\r\n" " "`
+cmdLine=`echo "$lines" | tr "\r\n" " "`
+echo $cmdLine
+run $cmdLine

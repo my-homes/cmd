@@ -1,0 +1,4 @@
+#! /usr/bin/env bash
+export JAVA_HOME="C:\Program Files\Zulu\zulu-21"
+./gradlew "$@"
+

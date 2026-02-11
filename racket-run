@@ -1,0 +1,5 @@
+#! /usr/bin/env bash
+set -e
+grep "+pkg " "$1" | awk '{ printf "%s\n", $2 }' | xargs -i raco pkg install -u --auto --skip-installed {}
+racket "$@"
+#gracket "$@"

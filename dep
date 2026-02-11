@@ -1,0 +1,4 @@
+#! /usr/bin/env bash
+#set -uvx
+set -e
+Dependencies -modules -depth 1 "$@"

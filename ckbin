@@ -1,0 +1,15 @@
+#! /usr/bin/env bash
+# https://qiita.com/kozy4324/items/8c327c6aad64cd820d29
+set -e
+isBinary() {
+  a=$(file --mime "$1" | grep "charset=binary")
+  if [ -n "$a" ]; then return 0; fi
+  return 1
+}
+for f in $*; do
+  if [ -d "$f" ] ; then
+    echo $f is directory;
+  else
+    isBinary "$f" && echo $f is binary || echo $f is text
+  fi
+done

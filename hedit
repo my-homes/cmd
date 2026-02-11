@@ -1,0 +1,7 @@
+#! /usr/bin/env bash
+set -uvx
+set -e
+history -a
+notepad3 ~/.bash_history
+history -c
+history -r ~/.bash_history

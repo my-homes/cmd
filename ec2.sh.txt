@@ -1,0 +1,4 @@
+#! /usr/bin/env bash
+set -uvx
+set -e
+ssh -i ~/settings/bgdev.pem ec2-user@ec2-54-65-173-120.ap-northeast-1.compute.amazonaws.com

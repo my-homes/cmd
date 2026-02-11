@@ -1,0 +1,2 @@
+#! /usr/bin/env bash
+"$USERPROFILE\AppData\Local\Programs\IntelliJ IDEA Ultimate\bin\idea64.exe" "$@" >& /dev/null &

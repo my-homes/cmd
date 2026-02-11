@@ -1,0 +1,10 @@
+#! /usr/bin/env bash
+#set -uvx
+set -e
+case "$OSTYPE" in
+    linux*)  gnome-terminal -- bash -c "run-json "$@"" ;;
+    darwin*)  echo "macOS" ;;
+    cygwin*)  start cmd.exe //c bash -c "run-json "$@"" ;;
+    msys*)   echo "MSYS" ;;
+    *)        start cmd.exe //c bash -c "run-json "$@"" ;;
+esac

@@ -1,0 +1,2 @@
+# !/usr/bin/env bash
+$* |& iconv -f cp932 -t utf-8

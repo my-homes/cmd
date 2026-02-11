@@ -1,0 +1,3 @@
+spf.exe
+lf.exe
+yazi.exe
