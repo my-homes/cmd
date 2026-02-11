@@ -1,9 +1,13 @@
 export C=/mnt/c
 export PATH="$HOME/cmd:$PATH"
 export PATH="$C/rider/bin:$PATH"
+export PATH="$C/idea/bin:$PATH"
 export PATH="$C/Program Files/Microsoft Visual Studio/18/Community/MSBuild/Current/Bin/amd64:$PATH"
 export PATH="$C/Program Files/Microsoft Visual Studio/18/Community/Common7/IDE:$PATH"
 
+i() {
+    idea64.exe "$@" &
+}
 git() {
     git.exe "$@"
 }
@@ -32,7 +36,12 @@ y() {
     yazi "@a"
 }
 e() {
-    emacsclient --reuse-frame "$@" &
+    ps -efa | grep "emacs --daemon" | grep -v "grep emacs --daemon"
+    if [ "$?" == "1" ]; then
+      emacs --daemon &
+    else
+      emacsclient --reuse-frame "$@" &
+    fi
 }
 d() {
     e .
@@ -70,6 +79,12 @@ RC() {
 }
 PR() {
     E ~/.profile &
+}
+I() {
+    idea64.exe "$@" >& /dev/null &
+}
+R() {
+    rider64.exe "$@" >& /dev/null &
 }
 f() {
     #start f.lnk `cygpath -w $(pwd)`
@@ -147,6 +162,9 @@ function ecx(){
             (echo "[$0] emacsclient -c -t $*"; emacsclient -c -t $*)) ||
         (echo "[$0] emacs $*"; emacs $*))
 }
+
+dotnet tool install -g Cake.Tool
+dotnet tool install -g dotnet-script
 
 ps -efa | grep "emacs --daemon" | grep -v "grep emacs --daemon"
 if [ "$?" == "1" ]; then
